@@ -1,0 +1,149 @@
+/* R6: variables y unidades relativas */
+:root {
+  --azul: #264573;
+  --azul-claro: #3f78b5;
+  --fondo: #eef2f7;
+  --papel: #ffffff;
+  --texto: #1d2733;
+  --suave: #5b6675;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+h2 { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--azul); }
+h3 { margin: 1rem 0 0.25rem; font-size: 1.05rem; }
+a { color: var(--azul-claro); }
+a:focus-visible { outline: 0.2rem solid var(--azul-claro); outline-offset: 0.15rem; }
+
+/* R7: imagenes que no se desbordan */
+img { max-width: 100%; height: auto; display: block; }
+.foto { border-radius: 50%; object-fit: cover; }
+
+/* R2, R4, R6: base para celular. Una columna, centrada y con ancho maximo */
+.pagina {
+  display: grid;
+  gap: 1rem;
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 1rem;
+  grid-template-areas:
+    "cabecera"
+    "menu"
+    "principal"
+    "lateral"
+    "pie";
+}
+.pagina.sin-lateral {
+  grid-template-areas:
+    "cabecera"
+    "menu"
+    "principal"
+    "pie";
+}
+
+.cabecera {
+  grid-area: cabecera;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: #fff;
+  background: var(--azul);
+}
+.titulo { margin: 0; font-weight: 600; letter-spacing: 0.05em; }
+
+/* R8: menu igual en todas las paginas */
+.menu {
+  grid-area: menu;
+  display: flex;
+  flex-direction: column;
+  background: var(--azul-claro);
+}
+.menu a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover,
+.menu a[aria-current="page"] { background: var(--azul); }
+.menu a:focus-visible { outline-color: #fff; outline-offset: -0.2rem; }
+
+.principal, .lateral, .pie { background: var(--papel); padding: 1.25rem; }
+.principal { grid-area: principal; }
+.lateral { grid-area: lateral; }
+.lateral section + section { margin-top: 1.5rem; }
+.detalle { margin: 0 0 0.5rem; color: var(--suave); }
+
+.pie { grid-area: pie; color: #fff; background: var(--azul); }
+.pie p { margin: 0.25rem 0; }
+.pie a { color: #fff; }
+
+/* R5: tarjetas automaticas */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tarjetas li, .tarjetas article {
+  padding: 0.75rem;
+  text-align: center;
+  background: var(--fondo);
+  border-left: 0.25rem solid var(--azul-claro);
+}
+.tarjetas.grande { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+.tarjetas article { text-align: left; }
+.tarjetas article h2 { font-size: 1.1rem; }
+
+.boton {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  color: #fff;
+  background: var(--azul);
+  text-decoration: none;
+}
+.boton:hover { background: var(--azul-claro); }
+
+/* R2, R3: breakpoint 1, desde 600px */
+@media (min-width: 600px) {
+  h1 { font-size: 2.25rem; }
+  .cabecera { flex-direction: row; text-align: left; padding: 2rem; }
+  .menu { flex-direction: row; }
+  .menu a { flex: 1; text-align: center; }
+  .tarjetas { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+}
+
+/* R2, R3, R4: breakpoint 2, desde 1024px. Dos columnas */
+@media (min-width: 1024px) {
+  .pagina {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "cabecera cabecera"
+      "menu menu"
+      "principal lateral"
+      "pie pie";
+  }
+  .pagina.sin-lateral {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "cabecera"
+      "menu"
+      "principal"
+      "pie";
+  }
+}
